@@ -7,8 +7,9 @@ const {
     addToDatabase,
     updateInstanceInDatabase,
     deleteFromDatabasebyId,
-  } 
-  = require('./db');
+} = require('./db');
+
+// id validator:
 
 const findMinionById = (req, res, next, id) => {
     const idToFind = id;
@@ -22,12 +23,11 @@ const findMinionById = (req, res, next, id) => {
         const minionNotFound = new Error(`Minion with ID ${idToFind} does not exist.`);
         minionNotFound.status = 404;
         res.status(minionNotFound.status).send(minionNotFound.message);
-        // return next(minionNotFound);
     }
 };
-
-
 minionsRouter.param('minionId', findMinionById);
+
+// CRUD middleware:
 
 minionsRouter.get('/', (req, res, next) => {
     const minions = getAllFromDatabase('minions');

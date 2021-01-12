@@ -7,8 +7,9 @@ const {
     addToDatabase,
     updateInstanceInDatabase,
     deleteFromDatabasebyId,
-  } 
-  = require('./db');
+} = require('./db');
+
+// id validator:
 
 const findIdeaById = (req, res, next, id) => {
     const idToFind = id;
@@ -24,9 +25,9 @@ const findIdeaById = (req, res, next, id) => {
         res.status(ideaNotFound.status).send(ideaNotFound.message);
     }
 };
-
-
 ideasRouter.param('ideaId', findIdeaById);
+
+// CRUD middleware:
 
 ideasRouter.get('/', (req, res, next) => {
     const ideas = getAllFromDatabase('ideas');
