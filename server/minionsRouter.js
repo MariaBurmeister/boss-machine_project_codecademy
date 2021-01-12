@@ -42,8 +42,6 @@ minionsRouter.post('/', (req, res, next) => {
 
     if (createdMinion) {
         res.status(201).send(createdMinion);
-    } else {
-        res.status(500).send();
     }
 });
 
@@ -56,9 +54,7 @@ minionsRouter.put('/:minionId', (req, res, next) => {
     const updatedMinion = updateInstanceInDatabase('minions', minionUpdate);
     if (updatedMinion) {
         res.status(200).send(updatedMinion);
-    } else {
-        res.status(500).send();
-    };
+    }
 });
 
 minionsRouter.delete('/:minionId', (req, res, next) => {
