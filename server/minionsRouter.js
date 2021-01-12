@@ -1,6 +1,7 @@
 const express = require('express');
 const minionsRouter = express.Router();
 
+
 const {
     getAllFromDatabase,
     getFromDatabaseById,
@@ -14,7 +15,7 @@ const {
 const findMinionById = (req, res, next, id) => {
     const idToFind = id;
     const foundMinion =  getFromDatabaseById('minions', idToFind);
-
+    
     if (foundMinion) {
         req.minion = foundMinion;
         req.minionId = foundMinion.id;
@@ -26,6 +27,7 @@ const findMinionById = (req, res, next, id) => {
     }
 };
 minionsRouter.param('minionId', findMinionById);
+
 
 // CRUD middleware:
 
@@ -39,7 +41,7 @@ minionsRouter.get('/', (req, res, next) => {
 minionsRouter.post('/', (req, res, next) => {
     const minionToAdd = req.body;
     const createdMinion = addToDatabase('minions', minionToAdd);
-
+    
     if (createdMinion) {
         res.status(201).send(createdMinion);
     }
@@ -65,6 +67,11 @@ minionsRouter.delete('/:minionId', (req, res, next) => {
         res.status(500).send();
     };
 });
+
+
+// router for '/work' routes:
+const workRouter = require('./workRouter');
+minionsRouter.use('/:minionId/Work', workRouter);
 
 
 module.exports = minionsRouter;
