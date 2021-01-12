@@ -1,6 +1,7 @@
 const express = require('express');
 const ideasRouter = express.Router();
 
+const checkMillionDollarIdea = require('./checkMillionDollarIdea');
 const {
     getAllFromDatabase,
     getFromDatabaseById,
@@ -9,12 +10,13 @@ const {
     deleteFromDatabasebyId,
 } = require('./db');
 
+
 // id validator:
 
 const findIdeaById = (req, res, next, id) => {
     const idToFind = id;
     const foundIdea =  getFromDatabaseById('ideas', idToFind);
-
+    
     if (foundIdea) {
         req.idea = foundIdea;
         req.ideaId = foundIdea.id;
@@ -36,7 +38,7 @@ ideasRouter.get('/', (req, res, next) => {
     }
 });
 
-ideasRouter.post('/', (req, res, next) => {
+ideasRouter.post('/', checkMillionDollarIdea, (req, res, next) => {
     const ideaToAdd = req.body;
     const createdIdea = addToDatabase('ideas', ideaToAdd);
 
@@ -49,7 +51,7 @@ ideasRouter.get('/:ideaId', (req, res, next) => {
     res.send(req.idea);
 });
 
-ideasRouter.put('/:ideaId', (req, res, next) => {
+ideasRouter.put('/:ideaId', checkMillionDollarIdea, (req, res, next) => {
     const ideaUpdate = req.body;
     const updatedIdea = updateInstanceInDatabase('ideas', ideaUpdate);
     if (updatedIdea) {
