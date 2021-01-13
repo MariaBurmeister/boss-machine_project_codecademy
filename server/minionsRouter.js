@@ -1,7 +1,6 @@
 const express = require('express');
 const minionsRouter = express.Router();
 
-
 const {
     getAllFromDatabase,
     getFromDatabaseById,
@@ -68,10 +67,8 @@ minionsRouter.delete('/:minionId', (req, res, next) => {
     };
 });
 
-
 // router for '/work' routes:
 const workRouter = require('./workRouter');
 minionsRouter.use('/:minionId/Work', workRouter);
-
 
 module.exports = minionsRouter;
